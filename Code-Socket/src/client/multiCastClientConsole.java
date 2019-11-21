@@ -18,9 +18,9 @@ public class multiCastClientConsole {
 	public void init() {
 		try {
 			multicastSocket = new MulticastSocket(port);
-			InetAddress inetAddress = InetAddress.getByName(groupHost); // 组地址
-			multicastSocket.joinGroup(inetAddress); // 加入到组播组中
-			datagramSocket = new DatagramSocket(); // DatagramSocket实例
+			InetAddress inetAddress = InetAddress.getByName(groupHost);
+			multicastSocket.joinGroup(inetAddress);
+			datagramSocket = new DatagramSocket();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,10 +38,10 @@ public class multiCastClientConsole {
 			public void run() {
 				while (true) {
 					try {
-						byte[] buf = new byte[128]; // 接收数据缓冲
-						DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length); // 接收数据的数据报
-						multicastSocket.receive(datagramPacket); // 接收数据
-						System.out.println(new String(buf, "UTF-8")); // 输出接收到的数据
+						byte[] buf = new byte[128];
+						DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length);
+						multicastSocket.receive(datagramPacket);
+						System.out.println(new String(buf, "UTF-8"));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -53,11 +53,11 @@ public class multiCastClientConsole {
 
 	public void send(String message) {
 		try {
-			byte[] buf = message.getBytes("UTF-8"); // 发送信息
-			InetAddress inetAddress = InetAddress.getByName(groupHost); // 组播地址
-			DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length, inetAddress, port); // 发送数据报
-			datagramSocket.send(datagramPacket); // 发送数据
-			datagramSocket.close(); // 关闭端口
+			byte[] buf = message.getBytes("UTF-8");
+			InetAddress inetAddress = InetAddress.getByName(groupHost);
+			DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length, inetAddress, port);
+			datagramSocket.send(datagramPacket);
+			datagramSocket.close();
 		} catch (Exception e) {
 
 		}
@@ -72,10 +72,10 @@ public class multiCastClientConsole {
 				while (true) {
 					try {
 						String message = s.nextLine();
-						byte[] buf = message.getBytes("UTF-8"); // 发送信息
-						InetAddress inetAddress = InetAddress.getByName(groupHost); // 组播地址
-						DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length, inetAddress, port); // 发送数据报
-						datagramSocket.send(datagramPacket); // 发送数据
+						byte[] buf = message.getBytes("UTF-8");
+						InetAddress inetAddress = InetAddress.getByName(groupHost);
+						DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length, inetAddress, port);
+						datagramSocket.send(datagramPacket);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
