@@ -1,11 +1,11 @@
 package client;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -17,6 +17,10 @@ public class IhmClient extends JFrame {
 	JTextArea textAreaReceive;
 	JTextArea textAreaSend;
 	JScrollPane scroll;
+
+	JLabel labelIp;
+	JLabel labelPort;
+	JLabel labelPseudo;
 
 	JTextField textFieldIp;
 	JTextField textFieldPort;
@@ -32,24 +36,36 @@ public class IhmClient extends JFrame {
 		this.setSize(1300, 800);
 		this.setLayout(null);
 
+		labelIp = new JLabel("Ip serveur");
+		labelIp.setSize(60, 30);
+		labelIp.setLocation(35, 25);
+
+		labelPort = new JLabel("Port");
+		labelPort.setSize(25, 30);
+		labelPort.setLocation(205, 25);
+
+		labelPseudo = new JLabel("Pseudo");
+		labelPseudo.setSize(50, 30);
+		labelPseudo.setLocation(320, 25);
+
 		textFieldIp = new JTextField();
-		textFieldIp.setSize(150, 50);
-		textFieldIp.setLocation(25, 25);
+		textFieldIp.setSize(80, 30);
+		textFieldIp.setLocation(100, 25);
 		textFieldIp.setToolTipText("Ip serveur");
 
 		textFieldPort = new JTextField();
-		textFieldPort.setSize(100, 50);
-		textFieldPort.setLocation(300, 25);
+		textFieldPort.setSize(50, 30);
+		textFieldPort.setLocation(240, 25);
 		textFieldPort.setToolTipText("Port");
 
 		textFieldName = new JTextField();
-		textFieldName.setSize(150, 50);
-		textFieldName.setLocation(550, 25);
-		textFieldName.setToolTipText("Votre nom");
+		textFieldName.setSize(100, 30);
+		textFieldName.setLocation(375, 25);
+		textFieldName.setToolTipText("Votre pseudo");
 
-		buttonConnection = new JButton("Connexion");
-		buttonConnection.setSize(150, 50);
-		buttonConnection.setLocation(800, 25);
+		buttonConnection = new JButton("Connecter");
+		buttonConnection.setSize(100, 30);
+		buttonConnection.setLocation(500, 25);
 		buttonConnection.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ip = textFieldIp.getText();
@@ -72,9 +88,9 @@ public class IhmClient extends JFrame {
 			}
 		});
 
-		buttonDeconnection = new JButton("Déconnexion");
-		buttonDeconnection.setSize(150, 50);
-		buttonDeconnection.setLocation(1000, 25);
+		buttonDeconnection = new JButton("Déconnecter");
+		buttonDeconnection.setSize(110, 30);
+		buttonDeconnection.setLocation(625, 25);
 		buttonDeconnection.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -95,28 +111,27 @@ public class IhmClient extends JFrame {
 		});
 		buttonDeconnection.setEnabled(false);
 
-		textAreaSend = new JTextArea();
-		textAreaSend.setSize(400, 200);
-		textAreaSend.setLocation(225, 100);
-		textAreaSend.setEnabled(false);
-
 		textAreaReceive = new JTextArea();
-		textAreaReceive.setSize(400, 200);
-		textAreaReceive.setLocation(125, 600);
+		textAreaReceive.setSize(500, 200);
+		textAreaReceive.setLocation(75, 100);
 		textAreaReceive.setLineWrap(true);
 		textAreaReceive.setWrapStyleWord(true);
 		textAreaReceive.setEditable(false);
 
+		textAreaSend = new JTextArea();
+		textAreaSend.setSize(500, 50);
+		textAreaSend.setLocation(75, 320);
+		textAreaSend.setEnabled(false);
+
 		scroll = new JScrollPane(textAreaReceive);
-		scroll.setSize(400, 200);
-		scroll.setLocation(125, 600);
+		scroll.setSize(500, 200);
+		scroll.setLocation(75, 100);
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-		buttonSendMessage = new JButton("Envoyer Message");
-		buttonSendMessage.setFont(new Font("Arial", 0, 30));
-		buttonSendMessage.setSize(300, 50);
-		buttonSendMessage.setLocation(850, 500);
+		buttonSendMessage = new JButton("Envoyer");
+		buttonSendMessage.setSize(100, 50);
+		buttonSendMessage.setLocation(600, 320);
 		buttonSendMessage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String message = textAreaSend.getText();
@@ -139,7 +154,9 @@ public class IhmClient extends JFrame {
 		this.add(textFieldName);
 		this.add(buttonConnection);
 		this.add(buttonDeconnection);
-
+		this.add(labelIp);
+		this.add(labelPort);
+		this.add(labelPseudo);
 		this.setVisible(true);
 	}
 
