@@ -33,7 +33,7 @@ public class IhmClient extends JFrame {
 	public IhmClient(EchoClient echoClient) {
 		this.echoClient = echoClient;
 
-		this.setSize(1300, 800);
+		this.setSize(800, 520);
 		this.setLayout(null);
 
 		labelIp = new JLabel("Ip serveur");
