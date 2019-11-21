@@ -8,64 +8,64 @@ package client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.net.Socket;
+import java.net.DatagramPacket;
+import java.net.Inet4Address;
+import java.net.MulticastSocket;
 
 public class EchoClient {
-
-	private Socket socket;
+	private MulticastSocket socket;
 	private IhmClient ihm;
-	private BufferedReader stdIn;
 	private BufferedReader socIn;
-
+	private Inet4Address inetAddress;
 	private PrintStream out;
-
-	private ThreadClient client;
+	private int port;
+	private ThreadClientMulticast client;
 
 	public EchoClient() {
 		this.ihm = new IhmClient(this);
 	}
 
-	public ThreadClient getClient() {
+	public ThreadClientMulticast getClient() {
 		return client;
 	}
 
-	public void setClient(ThreadClient client) {
+	public void setClient(ThreadClientMulticast client) {
 		this.client = client;
 	}
 
-	public synchronized void connect(String ipServer, int port, String nom) throws IOException {
-		socket = new Socket(ipServer, port);
-		stdIn = null;
-		socIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		out = new PrintStream(socket.getOutputStream());
-		out.println(nom + " est connecté.");
-		client = new ThreadClient(this, socIn, ihm);
+	public synchronized void connect(String addr, int port, String nom) throws IOException {
+		socket = new MulticastSocket(port);
+		// socIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		// out = new PrintStream(socket.getOutputStream());
+		// out.println(nom + " est connecté.");
+		this.port = port;
+
+		inetAddress = (Inet4Address) Inet4Address.getByName(addr);
+		client = new ThreadClientMulticast(socket, ihm, inetAddress);
+		socket.joinGroup(inetAddress);
 		client.start();
+		send(nom + " est connecté.");
 	}
 
-	public synchronized void disconnect(String name) {
+	public synchronized void disconnect(String name) throws IOException {
 		if (socket != null) {
-			try {
-				sendMessage(name + " est déconnecté");
-				socket.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
+			send(name + " est déconnecté");
+			socket.leaveGroup(inetAddress);
+			socket.close();
+			socket.close();
 		}
 	}
 
-	public synchronized void sendMessage(String message) {
-		if (socket != null) {
-			out.println(message);
+	public void send(String message) {
+		try {
+			byte[] buf = message.getBytes("UTF-8");
+			DatagramPacket datagramPacket = new DatagramPacket(buf, buf.length, inetAddress, port); // 发送数据报
+			socket.send(datagramPacket);
+			// socket.close();
+		} catch (Exception e) {
+
 		}
-	}
-
-	public void receiveMessage(String message) {
-		System.out.println("echo: " + message);
-
 	}
 
 	/**

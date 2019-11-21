@@ -58,7 +58,7 @@ public class IhmClient extends JFrame {
 				IhmClient.this.name = name;
 				try {
 					echoClient.connect(ip, port, name);
-					System.out.println(echoClient.getClient().getIsAlive());
+					// System.out.println(echoClient.getClient().getIsAlive());
 					buttonConnection.setEnabled(false);
 					textFieldIp.setEnabled(false);
 					textFieldPort.setEnabled(false);
@@ -121,7 +121,7 @@ public class IhmClient extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String message = textAreaSend.getText();
 				try {
-					echoClient.sendMessage(IhmClient.this.name + ": " + message);
+					echoClient.send(IhmClient.this.name + ": " + message);
 
 				} catch (Exception e1) {
 					e1.printStackTrace();
