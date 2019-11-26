@@ -12,7 +12,7 @@ public class Utils {
 	public static void writeSingleMessage(String line) throws IOException {
 
 		PrintWriter writer;
-		writer = new PrintWriter(new BufferedWriter(new FileWriter("Messages.txt", true)));
+		writer = new PrintWriter(new BufferedWriter(new FileWriter("./src/serveur/Messages.txt", true)));
 		writer.println(line);
 		writer.close();
 
@@ -20,7 +20,7 @@ public class Utils {
 
 	public static String readAllMessages() throws IOException {
 		String messages = "";
-		for (String line : Files.readAllLines(Paths.get("Messages.txt"))) {
+		for (String line : Files.readAllLines(Paths.get("./src/serveur/Messages.txt"))) {
 			messages += (line + "\n");
 		}
 		return messages;

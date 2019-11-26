@@ -103,7 +103,7 @@ public class IhmClient extends JFrame {
 					textFieldName.setEnabled(true);
 					textAreaSend.setEnabled(false);
 					buttonSendMessage.setEnabled(false);
-
+					buttonDeconnection.setEnabled(false);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
